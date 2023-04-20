@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SinDoc Summarizer</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  </head>
+
+  <body>
+    <div class="navbar static-top"></div>
+
+    <div class="container my-5 mx-3 mx-md-auto">
+      <!-- input box and output box -->
+      <div class="card p-4 border-0 h-100">
+        <div class="row">
+          <div class="col-md-6">
+            <h5 class="fw-bold mb-3">Enter document to summarize</h5>
+            <textarea
+              name=""
+              id="userInput"
+              cols="30"
+              rows="10"
+              placeholder="Enter your document here"
+              class="w-100 border border-1 px-3 py-2"
+            ></textarea>
+            <button class="btn btn-primary d-block ms-auto" id="genSum">
+              Generate summary
+            </button>
+          </div>
+          <div class="col-md-6">
+            <h5 class="fw-bold mb-3">Generated summary</h5>
+            <textarea
+              readonly
+              name=""
+              id="generatedSummary"
+              cols="30"
+              rows="10"
+              placeholder=""
+              class="w-100 border border-1 px-3 py-2"
+            ></textarea>
+            <button
+              class="btn btn-light btn-copy border border-2 d-block ms-auto"
+              onclick="copyText()"
+            >
+              <i class="fa fa-copy me-2" aria-hidden="true"></i> Copy
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function copyText() {
+        // Get the text field
+        var copyText = document.getElementById("genratedSummary");
+
+        // Select the text field
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); // For mobile devices
+
+        // Copy the text inside the text field
+        navigator.clipboard.writeText(copyText.value);
+
+        // Alert the copied text
+        alert("Copied the text: " + copyText.value);
+      }
+    </script>
+
+    <script>
+      $(document).ready(function () {
+        $(".navbar").load("/navbar");
+      });
+
+      $(document).on("click", "#genSum", function (e) {
+        var postFormData = new FormData();
+        var text=$('#userInput').val();
+        console.log("User input text  : ", text);
+        postFormData.append("inputText", text);
+
+        console.log("save button clicked");
+
+        $.ajax({
+          url: "/my_endpoint",
+          type: "POST",
+          data: postFormData,
+          processData: false,
+          contentType: false,
+        })
+
+          .done(function (response) {
+            console.log(" LINE 209 ", response);
+            var text = response
+            $('#generatedSummary').val(text)
+
+          })
+          .fail(function (response) {
+            $("#loadingModal").modal("hide");
+            console.log("FAIL");
+          });
+      });
+
+
+    </script>
+  </body>
+</html>

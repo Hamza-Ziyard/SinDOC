@@ -1,0 +1,4 @@
+*.log
+static\img
+__pycache__
+venv
