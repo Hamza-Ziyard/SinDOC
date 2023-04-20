@@ -29,11 +29,6 @@ def my_endpoint_extract():
     extractive = model.run_summarization(text)
     print('Extractive Summary -+-> ',extractive)
     
-    # abstractive = model.summarizeText(text)
-    # print(' abstractive Summary -+-> ',abstractive)
-    # hybrid = model.summarizeText(extractive)
-    # print(hybrid)
-
     return extractive
 
 @app.route('/my_endpoint_abstract', methods=['POST'])

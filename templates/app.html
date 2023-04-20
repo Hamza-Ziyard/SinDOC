@@ -142,10 +142,8 @@
           console.log("User input text  : ", text);
           postFormData.append("inputText", text);
 
-          if (
-            $("#extractRadio").is(":checked") 
-          ) {
-            $('.summary-type').text("extractive")
+          if ($("#extractRadio").is(":checked")) {
+            $(".summary-type").text("extractive");
             console.log("Printed extractive summary");
 
             $.ajax({
@@ -171,7 +169,7 @@
                 console.log("FAIL");
               });
           } else if ($("#abstractRadio").is(":checked")) {
-            $('.summary-type').text("abstractive")
+            $(".summary-type").text("abstractive");
             console.log("Printed abstractive summary");
 
             $.ajax({
@@ -198,8 +196,7 @@
               });
             console.log("Printed abstractive summary");
           } else if ($("#combinedRadio").is(":checked")) {
-            
-            $('.summary-type').text("combined")
+            $(".summary-type").text("combined");
             console.log("Printed abstractive summary");
 
             $.ajax({
@@ -225,10 +222,6 @@
                 console.log("FAIL");
               });
             console.log("Printed combined summary");
-            // } else {
-            //   $("#generatedSummary").val(extractive_summary);
-            //   console.log("Printed extractive summary");
-            // }
           }
         });
       });
