@@ -23,7 +23,7 @@
   <body>
     <div class="navbar static-top"></div>
 
-    <section class="container my-5 mx-3 mx-md-auto">
+    <section class="container my-3 mx-3 mx-md-auto">
       <img src="/static/img/hero-bg.png" class="hero-bg fixed-bottom" alt="" />
 
       <div id="loader">
@@ -31,6 +31,16 @@
         <h2 class="loader-para text-light fw-bolder">
           Generating <span class="summary-type"></span> summary
         </h2>
+      </div>
+
+      <!-- <div class="glass-box text-center card mb-5">
+        <small>If you want the most accurate and quickest response choose <span class="fw-bold">extractive</span> . If you want the most meaningful response choose <span class="fw-bold">combined</span> . If you want a normal model click <span class="fw-bold">abstarctive</span></small> 
+      </div> -->
+
+      <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+        <i class="fa 	fa fa-exclamation-circle me-2" aria-hidden="true"></i>
+        <small>If you want the most accurate and quickest response choose <strong>extractive</strong> . If you want the most meaningful response choose <strong>combined</strong> . If you want a normal model click <strong>abstractive</strong></small> 
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
 
       <!-- input box and output box -->
@@ -84,6 +94,16 @@
                   >Combined</label
                 >
               </div>
+              <!-- <a
+                tabindex="0"
+                class="btn btn-lg btn-danger"
+                role="button"
+                data-bs-toggle="popover"
+                data-bs-trigger="focus"
+                title="Important"
+                data-bs-content="hello world"
+                ><i class="fa fa-info me-2" aria-hidden="true"></i>
+              </a> -->
               <button class="btn btn-primary d-block ms-auto" id="genSum">
                 Generate summary
               </button>
