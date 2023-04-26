@@ -49,8 +49,8 @@ def my_endpoint_combined():
     extractive = model.run_summarization(text)
     print('Extractive Summary -+-> ',extractive)
     
-    abstractive = model.summarizeText(text)
-    print(' abstractive Summary -+-> ',abstractive)
+    # abstractive = model.summarizeText(text)
+    # print(' abstractive Summary -+-> ',abstractive)
     hybrid = model.summarizeText(extractive)
     print(hybrid)
 
