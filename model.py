@@ -9,7 +9,7 @@ from langdetect import detect
 
 #  extractive approach
 a=[]
-with open('model-files\stopWords.txt', 'r',encoding="utf-16") as f:
+with open('model-files/stopWords.txt', 'r',encoding="utf-16") as f:
     a+=f.readlines()
 f.close()
 for i in range(0,len(a)):
