@@ -9,7 +9,7 @@ from langdetect import detect
 
 #  extractive approach
 a=[]
-with open('model-files/stopWords.txt', 'r',encoding="utf-16") as f:
+with open('stopWords.txt', 'r',encoding="utf-16") as f:
     a+=f.readlines()
 f.close()
 for i in range(0,len(a)):
@@ -17,6 +17,7 @@ for i in range(0,len(a)):
 stopWords = a
 
 
+#genrate the frequency table
 def _create_frequency_table(text_string) -> dict:
     words = word_tokenize(text_string)
     ps = PorterStemmer()
@@ -54,7 +55,7 @@ def _score_sentences(sentences, freqTable) -> dict:
 
     print(sentenceValue)
     return sentenceValue
-    
+
 
 
 def _find_average_score(sentenceValue) -> int:
@@ -97,9 +98,10 @@ def run_summarization(text):
 #Now we have our model so we can summarise our summary 
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
-tokenizer = AutoTokenizer.from_pretrained("Hamza-Ziyard/mT5_multilingual_XLSum-abstaractive-sinhala-news-v2")
+tokenizer = AutoTokenizer.from_pretrained("Hamza-Ziyard/mT5_multilingual_XLSum-sinhala-abstaractive-summarization_CNN-dailymail")
 
-model = AutoModelForSeq2SeqLM.from_pretrained("Hamza-Ziyard/mT5_multilingual_XLSum-abstaractive-sinhala-news-v2")
+model = AutoModelForSeq2SeqLM.from_pretrained("Hamza-Ziyard/mT5_multilingual_XLSum-sinhala-abstaractive-summarization_CNN-dailymail")
+
 
 
 def summarizeText(text, model=model):

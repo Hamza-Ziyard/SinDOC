@@ -18,6 +18,13 @@
 
     <link rel="stylesheet" href="/static/css/style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+    <!-- Sweet alert -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.js"></script>
   </head>
 
   <body>
@@ -37,10 +44,23 @@
         <small>If you want the most accurate and quickest response choose <span class="fw-bold">extractive</span> . If you want the most meaningful response choose <span class="fw-bold">combined</span> . If you want a normal model click <span class="fw-bold">abstarctive</span></small> 
       </div> -->
 
-      <div class="alert alert-secondary alert-dismissible fade show" role="alert">
-        <i class="fa 	fa fa-exclamation-circle me-2" aria-hidden="true"></i>
-        <small>If you want the most accurate and quickest response choose <strong>extractive</strong> . If you want the most meaningful response choose <strong>combined</strong> . If you want a normal model click <strong>abstractive</strong></small> 
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      <div
+        class="alert alert-secondary alert-dismissible fade show"
+        role="alert"
+      >
+        <i class="fa fa fa-exclamation-circle me-2" aria-hidden="true"></i>
+        <small
+          >If you want the most accurate and quickest response choose
+          <strong>extractive</strong> . If you want the most meaningful response
+          choose <strong>combined</strong> . If you want a normal model click
+          <strong>abstractive</strong></small
+        >
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
       </div>
 
       <!-- input box and output box -->
@@ -122,12 +142,12 @@
             ></textarea>
             <div class="d-flex">
               <button
-                class="btn btn-danger btn-copy border border-2 d-block me-auto clear-txt-btn d-none"
+                class="btn btn-danger border border-2 d-block me-auto clear-txt-btn d-none"
               >
                 <i class="fa fa-close me-2" aria-hidden="true"></i> Clear
               </button>
               <button
-                class="btn btn-success btn-copy border border-2 d-block ms-auto copy-txt-btn d-none"
+                class="btn btn-success border border-2 d-block ms-auto copy-txt-btn d-none"
               >
                 <i class="fa fa-copy me-2" aria-hidden="true"></i> Copy
               </button>
@@ -145,8 +165,8 @@
         $(".navbar").load("/navbar");
 
         $(".copy-txt-btn").on("click", function () {
-          var copyText = $("#generatedSummary").val();
-          copyText.select();
+          // var copyText = $("#generatedSummary").val();
+          $("#generatedSummary").select();
           document.execCommand("copy");
         });
 
@@ -159,89 +179,109 @@
 
           var postFormData = new FormData();
           var text = $("#userInput").val();
-          console.log("User input text  : ", text);
-          postFormData.append("inputText", text);
+          console.log("text -------> " + text);
 
-          if ($("#extractRadio").is(":checked")) {
-            $(".summary-type").text("extractive");
-            console.log("Printed extractive summary");
+          var sentences = text.split(".");
+          console.log("sentences -------> " + sentences);
+          console.log("sentences length-------> " + sentences.length);
+          if (sentences.length <= 2) {
+            loader.style.display = "none";
+            Swal.fire({
+              title: "Error!",
+              text: "Document should contain more than one sentence.",
+              icon: "error",
+              confirmButtonText: "Cool",
+            });
+          } else {
+            console.log("User input text  : ", text);
+            postFormData.append("inputText", text);
 
-            $.ajax({
-              url: "/my_endpoint_extract",
-              type: "POST",
-              data: postFormData,
-              processData: false,
-              contentType: false,
-            })
+            if ($("#extractRadio").is(":checked")) {
+              $(".summary-type").text("extractive");
+              console.log("Printed extractive summary");
 
-              .done(function (response) {
-                $(".clear-txt-btn").removeClass("d-none");
-                $(".copy-txt-btn").removeClass("d-none");
-                loader.style.display = "none";
-
-                console.log(" LINE 209 ", response);
-                var extractive_summary = response;
-                $("#generatedSummary").val(extractive_summary);
+              $.ajax({
+                url: "/my_endpoint_extract",
+                type: "POST",
+                data: postFormData,
+                processData: false,
+                contentType: false,
               })
+                .done(function (response) {
+                  $(".clear-txt-btn").removeClass("d-none");
+                  $(".copy-txt-btn").removeClass("d-none");
+                  loader.style.display = "none";
 
-              .fail(function (response) {
-                loader.style.display = "none";
-                console.log("FAIL");
-              });
-          } else if ($("#abstractRadio").is(":checked")) {
-            $(".summary-type").text("abstractive");
-            console.log("Printed abstractive summary");
+                  console.log(" LINE 209 ", response);
+                  var extractive_summary = response;
+                  $("#generatedSummary").val(extractive_summary);
+                })
+                .fail(function (response) {
+                  loader.style.display = "none";
+                  console.log("FAIL");
+                });
+            } else if ($("#abstractRadio").is(":checked")) {
+              $(".summary-type").text("abstractive");
+              console.log("Printed abstractive summary");
 
-            $.ajax({
-              url: "/my_endpoint_abstract",
-              type: "POST",
-              data: postFormData,
-              processData: false,
-              contentType: false,
-            })
-
-              .done(function (response) {
-                $(".clear-txt-btn").removeClass("d-none");
-                $(".copy-txt-btn").removeClass("d-none");
-                loader.style.display = "none";
-
-                console.log(" LINE 209 ", response);
-                var abstractive_summary = response;
-                $("#generatedSummary").val(abstractive_summary);
+              $.ajax({
+                url: "/my_endpoint_abstract",
+                type: "POST",
+                data: postFormData,
+                processData: false,
+                contentType: false,
               })
+                .done(function (response) {
+                  $(".clear-txt-btn").removeClass("d-none");
+                  $(".copy-txt-btn").removeClass("d-none");
+                  loader.style.display = "none";
 
-              .fail(function (response) {
-                loader.style.display = "none";
-                console.log("FAIL");
-              });
-            console.log("Printed abstractive summary");
-          } else if ($("#combinedRadio").is(":checked")) {
-            $(".summary-type").text("combined");
-            console.log("Printed abstractive summary");
+                  console.log(" LINE 209 ", response);
+                  var abstractive_summary = response;
+                  $("#generatedSummary").val(abstractive_summary);
+                })
+                .fail(function (response) {
+                  loader.style.display = "none";
+                  console.log("FAIL");
+                });
+              console.log("Printed abstractive summary");
+            } else if ($("#combinedRadio").is(":checked")) {
+              $(".summary-type").text("combined");
+              console.log("Printed abstractive summary");
 
-            $.ajax({
-              url: "/my_endpoint_combined",
-              type: "POST",
-              data: postFormData,
-              processData: false,
-              contentType: false,
-            })
-
-              .done(function (response) {
-                $(".clear-txt-btn").removeClass("d-none");
-                $(".copy-txt-btn").removeClass("d-none");
-                loader.style.display = "none";
-
-                console.log(" LINE 209 ", response);
-                var combined_summary = response;
-                $("#generatedSummary").val(combined_summary);
+              $.ajax({
+                url: "/my_endpoint_combined",
+                type: "POST",
+                data: postFormData,
+                processData: false,
+                contentType: false,
               })
+                .done(function (response) {
+                  $(".clear-txt-btn").removeClass("d-none");
+                  $(".copy-txt-btn").removeClass("d-none");
+                  loader.style.display = "none";
 
-              .fail(function (response) {
-                loader.style.display = "none";
-                console.log("FAIL");
+                  console.log(" LINE 209 ", response);
+                  var combined_summary = response;
+                  $("#generatedSummary").val(combined_summary);
+                })
+                .fail(function (response) {
+                  loader.style.display = "none";
+                  console.log("FAIL");
+                });
+              console.log("Printed combined summary");
+            } else {
+              // alert('CHOOSE')
+              console.log("Choose type");
+              loader.style.display = "none";
+
+              Swal.fire({
+                title: "Warning!",
+                text: "Please choose type of summary to be generated!",
+                icon: "warning",
+                confirmButtonText: "Ok",
               });
-            console.log("Printed combined summary");
+            }
           }
         });
       });
