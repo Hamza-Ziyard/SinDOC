@@ -79,7 +79,7 @@ def _generate_summary(sentences, sentenceValue, threshold):
 
     return summary
 
-def run_summarization(text):
+def extractive_summarizer(text):
     # Create the word frequency table
     freq_table = _create_frequency_table(text)
     # Tokenize the sentences
@@ -95,16 +95,14 @@ def run_summarization(text):
 
 
 #abstractive approach
-#Now we have our model so we can summarise our summary 
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
-tokenizer = AutoTokenizer.from_pretrained("Hamza-Ziyard/mT5_multilingual_XLSum-sinhala-abstaractive-summarization_CNN-dailymail")
+tokenizer = AutoTokenizer.from_pretrained("Hamza-Ziyard/mT5_multilingual_XLSum-sinhala-abstaractive-summarization_CNN-Daily-Mail")
 
-model = AutoModelForSeq2SeqLM.from_pretrained("Hamza-Ziyard/mT5_multilingual_XLSum-sinhala-abstaractive-summarization_CNN-dailymail")
+model = AutoModelForSeq2SeqLM.from_pretrained("Hamza-Ziyard/mT5_multilingual_XLSum-sinhala-abstaractive-summarization_CNN-Daily-Mail")
 
 
-
-def summarizeText(text, model=model):
+def abstractive_summarizer(text, model=model):
     text_encoding = tokenizer(
         text,
         max_length=1000,
@@ -132,21 +130,3 @@ def summarizeText(text, model=model):
     #returning the predictions
     return "".join(preds)
 
-
-
-#combined approach
-# def hybrid_summarizer(text):
-#     extractive = run_summarization(text_str)
-
-#     print('Extractive Summary -+-> ',extractive)
-
-#     abstractive = summarizeText(text)
-
-#     print(' abstractive Summary -+-> ',abstractive)
-
-#     hybrid = summarizeText(extractive)
-
-#     return hybrid  , extractive , abstractive
-
-
-# hybrid  , extractive , abstractive = hybrid_summarizer(text_str)

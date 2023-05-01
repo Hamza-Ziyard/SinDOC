@@ -26,35 +26,32 @@ def my_endpoint_extract():
     text = request.form.get('inputText')
     print(text)
     
-    extractive = model.run_summarization(text)
-    print('Extractive Summary -+-> ',extractive)
+    extractive_summary = model.extractive_summarizer(text)
+    print('Extractive Summary -+-> ',extractive_summary)
     
-    return extractive
+    return extractive_summary
 
 @app.route('/my_endpoint_abstract', methods=['POST'])
 def my_endpoint_abstract():
     text = request.form.get('inputText')
     print(text)
     
-    abstractive = model.summarizeText(text)
-    print(' abstractive Summary -+-> ',abstractive)
+    abstractive_summary = model.abstractive_summarizer(text)
+    print(' abstractive Summary -+-> ',abstractive_summary)
 
-    return abstractive
+    return abstractive_summary
 
 @app.route('/my_endpoint_combined', methods=['POST'])
 def my_endpoint_combined():
     text = request.form.get('inputText')
     print(text)
     
-    extractive = model.run_summarization(text)
-    print('Extractive Summary -+-> ',extractive)
+    extractive_summary = model.extractive_summarizer(text)
     
-    # abstractive = model.summarizeText(text)
-    # print(' abstractive Summary -+-> ',abstractive)
-    hybrid = model.summarizeText(extractive)
-    print(hybrid)
+    combined_summary = model.abstractive_summarizer(extractive_summary)
+    print('Combined Summary -+-> ',combined_summary)
 
-    return hybrid
+    return combined_summary
 
 
 
