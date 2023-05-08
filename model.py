@@ -97,9 +97,9 @@ def extractive_summarizer(text):
 #abstractive approach
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
-tokenizer = AutoTokenizer.from_pretrained("Hamza-Ziyard/mT5_multilingual_XLSum-sinhala-abstaractive-summarization_CNN-Daily-Mail")
+tokenizer = AutoTokenizer.from_pretrained("Hamza-Ziyard/sinMT5-tuned")
 
-model = AutoModelForSeq2SeqLM.from_pretrained("Hamza-Ziyard/mT5_multilingual_XLSum-sinhala-abstaractive-summarization_CNN-Daily-Mail")
+model = AutoModelForSeq2SeqLM.from_pretrained("Hamza-Ziyard/sinMT5-tuned")
 
 
 def abstractive_summarizer(text, model=model):
