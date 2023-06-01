@@ -6,5 +6,5 @@ The preprint of the research can be accesssed through this [SinDOC: A Combined A
 
 
 The explanation of the research can be found in the following video.
-<a href="https://youtu.be/XpRvtlUSCfw" target="_blank"><img src="https://youtu.be/XpRvtlUSCfw" 
+<a href="https://youtu.be/XpRvtlUSCfw" target="_blank"><img src="static/img/app-video.png" 
 alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
