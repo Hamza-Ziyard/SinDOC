@@ -140,17 +140,75 @@
               >
                 <i class="fa fa-close me-2" aria-hidden="true"></i> Clear
               </button>
-              <button
-                class="btn btn-success border border-2 d-block ms-auto copy-txt-btn d-none"
-              >
-                <i class="fa fa-copy me-2" aria-hidden="true"></i> Copy
-              </button>
+
+              <div class="d-flex">
+                <button
+                  class="btn btn-outline-primary d-block ms-auto more-det-btn me-2 d-none" data-bs-toggle="modal" data-bs-target="#moreDet">                
+                 More details
+                </button>
+                <button
+                  class="btn btn-success border border-2 d-block ms-auto copy-txt-btn d-none"
+                >
+                  <i class="fa fa-copy me-2" aria-hidden="true"></i> Copy
+                </button>
+
+              </div>
               <div></div>
             </div>
           </div>
         </div>
       </div>
     </section>
+
+    <div class="modal fade" id="moreDet" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title fw-bolder" id="exampleModalLabel">Process of combined approach</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body d-md-flex justify-content-around align-items-center">
+            
+            <div class="extractive-box">
+              <textarea
+              readonly
+              name=""
+              id="generatedSummaryEx"
+              cols="30"
+              rows="15"
+              placeholder=""
+              class="w-100 border border-1 px-3 py-2"
+            ></textarea>
+            <span class="fw-bold text-center">Extractive result</span>
+            </div>
+            <div class="">
+              <h1 class="fw-bolder text-center">--></h1>
+              <div class="ms-4">
+                <span class="fw-bold text-center">Passing to abstractive</span>
+              </div>
+
+            </div>
+            <div class="combined-output-box">
+              <textarea
+              readonly
+              name=""
+              id="generatedSummaryCom"
+              cols="30"
+              rows="15"
+              placeholder=""
+              class="w-100 border border-1 px-3 py-2"
+            ></textarea>
+            <span class="fw-bold text-center">Combined result</span>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
     <script>
       $(document).ready(function () {
@@ -204,6 +262,7 @@
                 .done(function (response) {
                   $(".clear-txt-btn").removeClass("d-none");
                   $(".copy-txt-btn").removeClass("d-none");
+                  $(".more-det-btn").addClass("d-none");
                   loader.style.display = "none";
 
                   console.log(" LINE 209 ", response);
@@ -228,6 +287,7 @@
                 .done(function (response) {
                   $(".clear-txt-btn").removeClass("d-none");
                   $(".copy-txt-btn").removeClass("d-none");
+                  $(".more-det-btn").addClass("d-none");
                   loader.style.display = "none";
 
                   console.log(" LINE 209 ", response);
@@ -253,11 +313,15 @@
                 .done(function (response) {
                   $(".clear-txt-btn").removeClass("d-none");
                   $(".copy-txt-btn").removeClass("d-none");
+                  $(".more-det-btn").removeClass("d-none");
                   loader.style.display = "none";
 
                   console.log(" LINE 209 ", response);
-                  var combined_summary = response;
+                  var combined_summary = response.combine;
+                  var extractive_summary = response.extract;
                   $("#generatedSummary").val(combined_summary);
+                  $("#generatedSummaryCom").val(combined_summary);
+                  $("#generatedSummaryEx").val(extractive_summary);
                 })
                 .fail(function (response) {
                   loader.style.display = "none";

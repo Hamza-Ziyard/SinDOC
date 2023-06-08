@@ -51,7 +51,13 @@ def my_endpoint_combined():
     combined_summary = model.abstractive_summarizer(extractive_summary)
     print('Combined Summary -+-> ',combined_summary)
 
-    return combined_summary
+    data = {
+        "extract":  extractive_summary,
+        "combine": combined_summary,
+    }
+    return jsonify(data)
+
+    # return combined_summary
 
 
 
